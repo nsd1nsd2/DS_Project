@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt 
 import statistics as sta
+import calendar
 
 def read_file_yearly(filename):
     year_emission = {
@@ -42,14 +43,16 @@ def visual_yearly(year):
     plt.show()
     return year_emission
 
-def visual_monthly(year):
+def visual_monthly(year, country):
     month_emission = {
 
     }
+    months = []
+    for i in range(1,13):
+        months.append(calendar.month_name[i])
     month_emission = read_file_yearly(year)
-    
-
-print(visual_yearly('2020.csv'))
-print(visual_yearly('2021.csv'))
-print(visual_yearly('2022.csv'))
-print(visual_yearly('2023.csv'))
+    plt.bar(months, month_emission[country])
+    plt.title(country.lower().capitalize()+"'s Average CO2 Usage Per Month'")
+    plt.ylabel("Amount in tons")
+    plt.xlabel("Months")
+    plt.show()
