@@ -1,6 +1,8 @@
 import matplotlib.pyplot as plt 
 import statistics as sta
 import calendar
+emission = {
+    }
 
 def read_file_yearly(filename):
     year_emission = {
@@ -20,6 +22,7 @@ def read_file_yearly(filename):
     for key in list(year_emission.keys()):
         if len(year_emission[key]) != 12:
             del year_emission[key]
+    emission = year_emission
     return year_emission
 
 def visual_yearly(year):
@@ -54,11 +57,39 @@ def visual_monthly(year, country):
     plt.bar(months, month_emission[country])
     plt.title(country.lower().capitalize()+"'s Average CO2 Usage Per Month'")
     plt.ylabel("Amount in tons")
+    plt.xticks(fontsize = 8)
     plt.xlabel("Months")
     plt.show()
+def plot_style(country):
+    plt.xlabel("Months")
+    plt.title(country + "'s Seasonal CO2 Emissions")
+    plt.ylabel("Average Amount Burned in Tonnes", size = 10)
+    plt.show()
 
-def visual_seasonal(year, country):
-    seasonal_
+def visual_seasonal(year,season,country):
+    seasonal_emission = {
 
-print(visual_yearly('2020.csv'))
-print(visual_monthly('2021.csv','Albania'))
+    }
+    seasonal_winter = ['December', 'January','February']
+    seasonal_spring = ['March', 'April','May']
+    seasonal_summer = ['June', 'July', 'August']
+    seasonal_fall = ['September', 'October','November']
+    seasonal_emission = read_file_yearly(year)
+    if season == "winter":
+        plt.bar(seasonal_winter, (seasonal_emission[country][0:3]), width= 0.2)
+        plot_style(country)
+    if season == "spring":
+        plt.bar(seasonal_spring, (seasonal_emission[country][3:6]), width= 0.5)
+        plot_style(country)
+    if season == "summer":
+        plt.bar(seasonal_summer, (seasonal_emission[country][6:9]), width= 0.5)
+        plot_style(country)
+    if season == 'fall':
+        plt.bar(seasonal_fall, (seasonal_emission[country][9:12]), width= 0.5)
+        plot_style(country)
+    
+
+print(read_file_yearly('2020.csv'))         
+visual_seasonal('2020.csv', 'winter', 'Switzerland')
+#print(visual_yearly('2020.csv'))
+#print(visual_monthly('2021.csv','Albania'))
