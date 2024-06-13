@@ -11,7 +11,7 @@ def read_file_yearly(filename):
     line = file.readline().strip()
     for line in file: 
         val = line.split(',')
-        country = val[2]
+        country = val[2].lower().capitalize()
         emission = val[4]
         if country not in year_emission:
             year_emission[country] = []
@@ -56,3 +56,9 @@ def visual_monthly(year, country):
     plt.ylabel("Amount in tons")
     plt.xlabel("Months")
     plt.show()
+
+def visual_seasonal(year, country):
+    seasonal_
+
+print(visual_yearly('2020.csv'))
+print(visual_monthly('2021.csv','Albania'))
