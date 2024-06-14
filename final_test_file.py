@@ -111,7 +111,7 @@ def visual_seasonal(year,season,country):
         monthly_emissions_countries = countries_df.groupby(['YEAR', 'MONTH', 'STATE_NAME'])['CO2_QTY_TONNES'].mean().reset_index()
     
         # Colors for plotting
-        colors = {2020: 'b', 2021: 'g', 2022: 'r', 2023: 'c'}
+        colors = {2020: 'b', 2021: 'g', 2022: 'r', 2023: 'm'}
 
         # Albania Plot
         plt.figure(figsize=(16, 10))
