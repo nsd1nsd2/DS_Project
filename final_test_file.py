@@ -96,6 +96,48 @@ def visual_seasonal(year,season,country):
         fall_plot = plt.bar(seasonal_fall, (seasonal_emission[country][9:12]), width= 0.5, color = colors)
         plot_style(country)
         return fall_plot
-#visual_yearly("2020.csv")
-#visual_monthly('2020.csv','France')
-visual_seasonal('2020.csv','winter',"Albania")
+    
+    def main():
+    
+        # Loading CSV files into dataframes and combining
+        files = ['2020.csv', '2021.csv', '2022.csv', '2023.csv']
+        dataframes = [pd.read_csv(file) for file in files]
+        combined_df = pd.concat(dataframes)
+    
+        # Filtering data for Albania and Bosnia and Herzegovina
+        countries_df = combined_df[combined_df['STATE_NAME'].isin(['ALBANIA', 'BOSNIA AND HERZEGOVINA'])]
+
+        # Getting monthly emissions
+        monthly_emissions_countries = countries_df.groupby(['YEAR', 'MONTH', 'STATE_NAME'])['CO2_QTY_TONNES'].mean().reset_index()
+    
+        # Colors for plotting
+        colors = {2020: 'b', 2021: 'g', 2022: 'r', 2023: 'c'}
+
+        # Albania Plot
+        plt.figure(figsize=(16, 10))
+        for year in monthly_emissions_countries['YEAR'].unique():
+            albania_data = monthly_emissions_countries[(monthly_emissions_countries['STATE_NAME'] == 'ALBANIA') & (monthly_emissions_countries['YEAR'] == year)]
+        plt.plot(albania_data['MONTH'], albania_data['CO2_QTY_TONNES'], color=colors[year], label=f'Albania {year}')
+        plt.title('Monthly CO2 Emissions for Albania (2020-2023)', fontsize=16)
+        plt.xlabel('Month', fontsize=14)
+        plt.ylabel('CO2 Emissions (Tonnes)', fontsize=14)
+        plt.legend(title='Year')
+        plt.grid(True)
+        plt.tight_layout()
+        plt.show()
+
+        # Bosnia and Herzegovina Plot
+        plt.figure(figsize=(16, 10))
+        for year in monthly_emissions_countries['YEAR'].unique():
+            bosnia_data = monthly_emissions_countries[(monthly_emissions_countries['STATE_NAME'] == 'BOSNIA AND HERZEGOVINA') & (monthly_emissions_countries['YEAR'] == year)]
+        plt.plot(bosnia_data['MONTH'], bosnia_data['CO2_QTY_TONNES'], color=colors[year], label=f'Bosnia and Herzegovina {year}')
+        plt.title('Monthly CO2 Emissions for Bosnia and Herzegovina (2020-2023)', fontsize=16)
+        plt.xlabel('Month', fontsize=14)
+        plt.ylabel('CO2 Emissions (Tonnes)', fontsize=14)
+        plt.legend(title='Year')
+        plt.grid(True)
+        plt.tight_layout()
+        plt.show()
+
+if __name__ == "__main__":
+    main()
