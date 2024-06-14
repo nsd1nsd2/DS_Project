@@ -45,17 +45,16 @@ def visual_yearly(year):
     plt.title(f"Yearly Average of CO2 Emission ({year.replace('.csv', '')})")
     plt.yscale('log')
     plt.xticks(rotation = 90)
-    plt.savefig('year.png', bbox_inches = 'tight')
     plt.show()
 
 def visual_monthly(combined_df, country):
-    # Get unique years from the dataframe
+    # Getting years from dataframe
     years = combined_df["YEAR"].unique()
     
-    # Define a color map for the years to differentiate them in the plot
+    # Colors for plotting
     colors = {2020: 'b', 2021: 'g', 2022: 'r', 2023: 'm'}
 
-    # Plot for the specified country
+    # Plotting for specified country
     plt.figure(figsize=(16, 10))
     for year in years:
         country_data = combined_df[(combined_df['STATE_NAME'] == country.upper()) & (combined_df['YEAR'] == year)]
@@ -117,5 +116,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-    
