@@ -43,7 +43,7 @@ def visual_yearly(year):
     plt.ylabel("Average emission in pounds")
     plt.xlabel("Countries")
     plt.title(f"Yearly Average of CO2 Emission ({year.replace('.csv', '')})")
-    plt.yscale('log')
+    plt.yscale("log")
     plt.xticks(rotation = 90)
     plt.show()
 
@@ -57,19 +57,19 @@ def visual_monthly(combined_df, country):
     # Plotting for specified country
     plt.figure(figsize=(16, 10))
     for year in years:
-        country_data = combined_df[(combined_df['STATE_NAME'] == country.upper()) & (combined_df['YEAR'] == year)]
-        plt.plot(country_data['MONTH'], country_data['CO2_QTY_TONNES'], color=colors[year], label=f'{country.title()} {year}')
-    plt.title(f'Monthly CO2 Emissions for {country.title()} (2020-2023)', fontsize=16)
-    plt.xlabel('Month', fontsize=14)
-    plt.ylabel('CO2 Emissions (Tonnes)', fontsize=14)
-    plt.legend(title='Year')
+        country_data = combined_df[(combined_df["STATE_NAME"] == country.upper()) & (combined_df["YEAR"] == year)]
+        plt.plot(country_data["MONTH"], country_data["CO2_QTY_TONNES"], color=colors[year], label=f"{country.title()} {year}")
+    plt.title(f"Monthly CO2 Emissions for {country.title()} (2020-2023)", fontsize=16)
+    plt.xlabel("Month", fontsize=14)
+    plt.ylabel("CO2 Emissions (Tonnes)", fontsize=14)
+    plt.legend(title="Year")
     plt.grid(True)
     plt.tight_layout()
     plt.show()
     
-def visual_heatmap(df, country):
+def visual_heatmap(combined_df, country):
     # Filtering data for the specified country
-    country_df = df[df["STATE_NAME"] == country.upper()]
+    country_df = combined_df[combined_df["STATE_NAME"] == country.upper()]
     
     # Creating heatmap with years as rows and months as columns
     years = country_df["YEAR"].unique()
@@ -79,7 +79,7 @@ def visual_heatmap(df, country):
     
     for i, year in enumerate(years):
         for j, month in enumerate(months):
-            emission = country_df[(country_df["Year"] == year) & (country_df["Month"] == month)]["CO2_QTY_TONNES"]
+            emission = country_df[(country_df["YEAR"] == year) & (country_df["MONTH"] == month)]["CO2_QTY_TONNES"]
             if not emission.empty:
                 heatmap_data[i, j] = emission.values[0]
     
@@ -111,8 +111,8 @@ def main():
         visual_monthly(combined_df, country)
         
     # Plotting heatmaps for Albania and Bosnia (2020 -2023)
-    visual_heatmap(combined_df, 'Albania')
-    visual_heatmap(combined_df, 'Bosnia And Herzegovina')
+    visual_heatmap(combined_df, "Albania")
+    visual_heatmap(combined_df, "Bosnia And Herzegovina")
 
 if __name__ == "__main__":
     main()
